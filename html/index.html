@@ -7,6 +7,7 @@
     <!-- icone para pagina-->
     <link rel="icon" type="image/png" href="../img/logo.png"/>
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/estiloGeral.css">
     <title>Haspartum</title>
 </head>
 <body>
@@ -14,8 +15,11 @@
         <header>
             <img src="../img/logo.png" alt="" class="logo">
             <h1>Haspartum</h1>
-            <img src="../img/user.png" alt="" class="user">
+            <img onclick="mostrarMenu()" src="../img/user.png" alt="" class="user">
         </header>
+        <div id="menu" class="menu">
+            <a id="botao1" href='entrarOuCasdastrar.html' ></a>  
+        </div>
         <main>
             <div class="container">
                 <h1 class="principal">Seja, Bem-Vindo!</h1>
@@ -48,3 +52,21 @@
     </footer>
 </body>
 </html>
+
+<script>
+    function mostrarMenu(){
+        if (menu.style.height == "8vh") {
+            menu.style.height = "0";
+            botao1.style.width = "0";
+            botao1.style.padding = "0";
+            botao1.innerHTML = "";
+        } else {
+            menu.style.height = "8vh";
+            botao1.style.width = "100%";
+            botao1.style.padding = "10px";
+            botao1.innerHTML = "<a href='entrarOuCasdastrar.html'>Entre/Cadastre-se</a>";
+            botao1.style.cursor = "pointer";
+        }
+    }
+
+</script>

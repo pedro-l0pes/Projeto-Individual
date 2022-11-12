@@ -1,0 +1,39 @@
+.usuario {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    width: 12%;
+}
+
+.menu {
+    position: absolute;
+    width: 17vw;
+    height: 35vh;
+    background-color: #fff;
+    margin-left: 78vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: 0.3s;
+}
+
+.menu a{
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid grey;
+    width: 100%;
+    padding: 20px;
+    transition: .7s;
+}
+
+.menu a:hover{
+    color: white;
+    background-color: #071E3D;
+    border-bottom: 4px solid #21E6C1;
+}
+
+
