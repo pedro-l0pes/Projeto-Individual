@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- icone para pagina-->
-    <link rel="icon" type="image/png" href="../img/logo.png"/>
+    <link rel="icon" type="image/png" href="../img/logo.png" />
     <link rel="stylesheet" href="../css/paginaUsuario.css">
     <link rel="stylesheet" href="../css/estiloGeral.css">
     <title>Haspartum - Pagina Usuário</title>
 </head>
+
 <body>
-    <div class="inicio">
-        <header>
+    <div id="inicio" class="inicio">
+        <header id="cabeca">
             <img src="../img/logo.png" alt="" class="logo">
             <h1>Haspartum</h1>
             <div class="usuario">
-                <img src="../img/user.png" alt="" class="user"> Olá, <span>Usuário!</span>
+                <img onclick="mostrarMenu()" src="../img/user.png" alt="" class="user"> Olá, <span>Usuário!</span>
             </div>
-            
+
         </header>
-        <div class="menu">
-            <button>Meus dados</button>  
-            <button>Estatisticas</button>  
-            <button>Sair</button>
+        <div id="menu" class="menu">
         </div>
-        <main>
-            <button style="cursor: pointer;">tgyguh</button>
+        <main id="corpo">
+            <!-- Criar aba para quiz -->
         </main>
     </div>
-    <footer>
+    <footer id="pe">
         <div class="contatos">
             <h1>CONTATOS</h1>
             <p>haspartum15@gmail.com</p>
@@ -52,4 +51,40 @@
         </div>
     </footer>
 </body>
+
 </html>
+
+<script>
+    function mostrarMenu() {
+        if (menu.style.height == "25vh") {
+            menu.innerHTML = ``;
+            menu.style.height = "0";
+            botao1.style.width = "0";
+            botao1.style.padding = "0";
+            botao1.innerHTML = "";
+            botao2.style.width = "0";
+            botao2.style.padding = "0";
+            botao2.innerHTML = "";
+            botao3.style.width = "0";
+            botao3.style.padding = "0";
+            botao3.innerHTML = "";
+
+        } else {
+            menu.innerHTML = `
+            <a id="botao1">Meus dados</a>  
+            <a id="botao2">Estatisticas</a>  
+            <a id="botao3">Sair</a>
+            `;
+            menu.style.height = "25vh";
+            botao1.style.width = "80%";
+            botao1.style.padding = "10px";
+            botao1.style.cursor = "pointer";
+            botao2.style.width = "80%";
+            botao2.style.padding = "10px";
+            botao2.style.cursor = "pointer";            
+            botao3.style.width = "80%";
+            botao3.style.padding = "10px";
+            botao3.style.cursor = "pointer";
+        }
+    }
+</script>

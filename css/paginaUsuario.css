@@ -7,9 +7,8 @@
 }
 
 .menu {
-    position: absolute;
     width: 17vw;
-    height: 35vh;
+    height: 0vh;
     background-color: #fff;
     margin-left: 78vw;
     display: flex;
@@ -21,19 +20,20 @@
     transition: 0.3s;
 }
 
-.menu a{
+.menu a {
     background-color: transparent;
     border: none;
     border-bottom: 2px solid grey;
-    width: 100%;
-    padding: 20px;
-    transition: .7s;
+    width: 0;
+    padding: 0px;
+    transition: .3s;
+    text-decoration: none;
+    color: #071E3D;
 }
 
-.menu a:hover{
-    color: white;
-    background-color: #071E3D;
+.menu a:hover {
     border-bottom: 4px solid #21E6C1;
+    cursor: pointer;
 }
 
 

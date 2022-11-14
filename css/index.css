@@ -1,5 +1,4 @@
 .menu {
-    position: relative;
     width: 14vw;
     height: 0vh;
     background-color: #fff;
@@ -14,19 +13,17 @@
 }
 
 .menu a {
-    text-decoration: none;
-    color: #071E3D;
-}
-.menu button {
     background-color: transparent;
     border: none;
     border-bottom: 2px solid grey;
     width: 0;
     padding: 0px;
-    transition: .7s;
+    transition: .3s;
+    text-decoration: none;
+    color: #071E3D;
 }
 
-.menu button:hover {
+.menu a:hover {
     border-bottom: 4px solid #21E6C1;
     cursor: pointer;
 }
