@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="./img/logo.png" />
+    <link rel="stylesheet" href="./css/inOrUp.css">
+    <script src="./js/funcoes.js"></script>
+    <title id="tituloPagina">Haspartum - Entrar</title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="entre" class="entrar" style="overflow: auto;">
+            <h2>Entrar</h2>
+            <div class="inputs">
+                <input type="text" placeholder="Email" id="ipt_email">
+                <input type="password" id="ipt_senha" placeholder="Senha">
+                <div class="entradaMostrar">
+                    <input type="checkbox" name="ipt_mostrarSenha" id="ipt_mostrarSenha" style="width: 15px;"
+                        onclick="mostrarSenha()"> <label for="ipt_mostrarSenha">Mostrar Senha</label>
+                </div>
+            </div>
+            <div id="div_erros" style="color:red;">
+
+            </div>
+            <button onclick="entrar()">Entrar</button>
+        </div>
+        <div id="cadastre" class="entrar">
+            <img src="./img/logo.png" alt="">
+            <div class="alerta_erro">
+                <div class="card_erro" id="cardErro">
+                    <span id="mensagem_erro"></span>
+                </div>
+            </div>
+            <h2 class="linkEntrar" onclick="abrirCadastrar()">Cadastre-se</h2>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    entre.style.transition = "0.2s";
+    entre.style.backgroundColor = "#071e3d";
+    entre.style.borderRadius = "10px"
+    function mostrarSenha() {
+        if (ipt_mostrarSenha.checked) {
+            ipt_senha.type = "text";
+        } else {
+            ipt_senha.type = "password";
+        }
+    }
+    function mostrarConfirmarSenha() {
+        mostrarSenha();
+        if (ipt_mostrarSenha.checked) {
+            ipt_confirmarSenha.type = "text";
+        } else {
+            ipt_confirmarSenha.type = "password";
+        }
+    }
+
+
+
+
+    function abrirEntrar() {
+        tituloPagina.innerHTML = "Haspartum - Entrar"
+        entre.innerHTML = `
+        <h2>Entrar</h2>
+            <div class="inputs">
+                <input type="text" placeholder="Email" id="ipt_email">
+                <input type="password" id="ipt_senha" placeholder="Senha">
+                <div class="entradaMostrar">
+                    <input type="checkbox" name="ipt_mostrarSenha" id="ipt_mostrarSenha" style="width: 15px;" onclick="mostrarSenha()"> <label for="ipt_mostrarSenha">Mostrar Senha</label>
+                </div>
+            </div>
+            <div id="div_erros" style="color:red;">
+
+            </div>
+            <button onclick="entrar()">Entrar</button>
+        `;
+
+        cadastre.innerHTML = `
+        <img src="./img/logo.png" alt="">
+        <div class="alerta_erro">
+                <div class="card_erro" id="cardErro">
+                    <span id="mensagem_erro"></span>
+                </div>
+        </div>
+        <h2 class="linkEntrar" onclick="abrirCadastrar()">Cadastre-se</h2>
+        `;
+
+        cadastre.style.transition = "";
+        cadastre.style.backgroundColor = "";
+        cadastre.style.borderRadius = ""
+
+        entre.style.transition = "0.2s";
+        entre.style.backgroundColor = "#071e3d";
+        entre.style.borderRadius = "10px"
+
+    }
+
+
+    function abrirCadastrar() {
+        tituloPagina.innerHTML = "Haspartum - Cadastre-se"
+        cadastre.innerHTML = `
+        <h2>Cadastrar</h2>
+                <input type="text" placeholder="Nome" id="ipt_nome">
+                <input type="text" placeholder="Sobrenome" id="ipt_sobrenome">
+                <input type="email" placeholder="Email" id="ipt_email">
+                <input type="password" placeholder="Senha" id="ipt_senha" onkeyup="mudarSituacaoSenha()">
+                <div id="sitSenha" style=""></div>
+                <input type="password" placeholder="Confirmar Senha" id="ipt_confirmarSenha" onkeyup="mudarSituacaoSenha()">
+                <div id="sitconfirmarSenha" style="color:red;"></div>
+                <div class="entradaMostrar">
+                    <input type="checkbox" name="ipt_mostrarSenha" id="ipt_mostrarSenha" style="width: 15px;" onclick="mostrarConfirmarSenha()"> <label for="ipt_mostrarSenha">Mostrar Senha</label>
+                </div>
+                <div> Esporte Favorito: 
+                    <select id="slct_esporte">
+                        <option value="Futsal"> Futsal </option>
+                        <option value="Futebol"> Futebol </option>
+                    </select>
+                </div>
+                <div id="div_erros" style="color:red;">
+
+                </div>
+            <button onclick="cadastrar()">Cadastrar</button>
+        `;
+
+        cadastre.style.transition = "0.2s";
+        cadastre.style.backgroundColor = "#071e3d";
+        cadastre.style.borderRadius = "10px"
+
+        entre.innerHTML = `
+        <img src="./img/logo.png" alt="">
+        <div class="alerta_erro">
+                <div class="card_erro" id="cardErro">
+                    <span id="mensagem_erro"></span>
+                </div>
+        </div>
+        <h2 class="linkEntrar" onclick="abrirEntrar()">Entre</h2>
+        `;
+
+        entre.style.transition = "";
+        entre.style.backgroundColor = "";
+        entre.style.borderRadius = ""
+    }
+
+    function validarSenha(senhaVar) {
+        const senha = { situacao: "fraca", valida: false };
+        if (senhaVar.length >= 8) {
+            senha.situacao = "média";
+            let posicao = 0;
+            let qtdEspeciais = 0;
+            let qtdMaiusculas = 0;
+            let qtdMinusculas = 0;
+            let qtdNumeros = 0
+            const caracteresEspeciais = '@#$%¨&*(){}`^~:;><.,?/+-=§_';
+            const numeros = '0123456789';
+            while (posicao < senhaVar.length) {
+                console.log(senhaVar[posicao])
+                if (caracteresEspeciais.indexOf(senhaVar[posicao]) >= 0) {
+                    qtdEspeciais++;
+                } else if (numeros.indexOf(senhaVar[posicao]) >= 0) {
+                    qtdNumeros++;
+                } else if (senhaVar[posicao] == String(senhaVar[posicao]).toLowerCase()) {
+                    qtdMinusculas++;
+                } else {
+                    qtdMaiusculas++;
+                }
+
+                if (qtdEspeciais >= 3 && qtdMaiusculas >= 3 && qtdMinusculas >= 3 && qtdNumeros >= 3) {
+                    senha.situacao = "épica";
+                    break;
+                } else if (qtdEspeciais > 0 && qtdMaiusculas > 0 && qtdMinusculas > 0 && qtdNumeros > 0) {
+                    senha.situacao = "forte";
+                }
+                posicao++
+            }
+            if (senha.situacao == "forte" || senha.situacao == "épica") {
+                senha.valida = true;
+            }
+        }
+        return senha;
+
+    }
+
+    function validarConfimarSenha(senha, confirmarSenha) {
+        return senha == confirmarSenha;
+    }
+
+    function mudarSituacaoSenha() {
+        const situacaoSenha = validarSenha(ipt_senha.value).situacao;
+        let cor = "red";
+        let validaOuInvalida = "inválida"
+        if (situacaoSenha == "média") {
+            cor = "yellow";
+        } else if (situacaoSenha == "forte") {
+            cor = "green";
+            validaOuInvalida = "válida"
+        } else if (situacaoSenha == "épica") {
+            cor = "#2fbbda";
+            validaOuInvalida = "válida"
+        }
+        sitSenha.style.color = cor;
+        sitSenha.innerHTML = `Senha ${situacaoSenha}: ${validaOuInvalida}`;
+        validarConfimarSenha(ipt_senha.value, ipt_confirmarSenha.value) ? (sitconfirmarSenha.innerHTML = ``) : (sitconfirmarSenha.innerHTML = "Confirmar senha incorreta")
+    }
+
+
+    function entrar() {
+
+
+        var emailVar = ipt_email.value;
+        var senhaVar = ipt_senha.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            div_erro.innerHTML = "O email ou senha está inválido";
+            return false;
+        } else {
+            // setInterval(sumirMensagem, 5000)
+        }
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+
+                    setTimeout(function () {
+                        window.location = "./paginaUsuario.html";
+                    }, 1000); // apenas para exibir o loading
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    // finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+    function cadastrar() {
+
+        var nomeVar = ipt_nome.value;
+        var sobrenomeVar = ipt_sobrenome.value;
+        var esporteFavoritoVar = slct_esporte.value;
+        var emailVar = ipt_email.value;
+        var senhaVar = ipt_senha.value;
+        var confirmarSenhaVar = ipt_confirmarSenha.value;
+        div_erros.innerHTML = "";
+
+        if (nomeVar == "" || sobrenomeVar == "") {
+            div_erros.innerHTML = "Campo nome ou sobrenome inválido";
+            return false;
+        }
+        if (!validarSenha(senhaVar).valida || !validarConfimarSenha(senhaVar, confirmarSenhaVar)) {
+            div_erros.innerHTML = "Erro ao cadastrar senha, verifique os campos";
+            return false;
+        }
+        if (!ipt_email.value.indexOf("@") >= 8 || !ipt_email.value.indexOf(".com") >= ipt_email.value.indexOf("@")+6){
+            div_erros.innerHTML = "Erro ao cadastrar email, verifique o campo";
+            return false;
+        }
+
+
+            // Enviando o valor da nova input
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    // crie um atributo que recebe o valor recuperado aqui
+                    // Agora vá para o arquivo routes/usuario.js
+                    nomeServer: nomeVar,
+                    sobrenomeServer: sobrenomeVar,
+                    esporteFavoritoServer: esporteFavoritoVar,
+                    emailServer: emailVar,
+                    senhaServer: senhaVar,
+                })
+            }).then(function (resposta) {
+
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    // cardErro.style.display = "block";
+
+                    // mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                    setTimeout(() => {
+                        window.location = "inOrUp.html";
+                    }, "1000")
+
+                } else {
+                    div_erros.innerHTML = "Houve um erro ao tentar realizar o cadastro! Tente novamente.";
+                    throw ("Houve um erro ao tentar realizar o cadastro!");
+                }
+            }).catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+            return false;
+        }
+
+
+</script>
