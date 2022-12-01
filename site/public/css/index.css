@@ -28,6 +28,12 @@
     cursor: pointer;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 main .container{
     padding: 50px;
@@ -54,8 +60,45 @@ main .container{
 
 
 .entrar:hover{
+    transition: 0.3s;
     background-color: #071E3D;
     color: #21E6C1;
 }
 
+.valores{
+    margin: 100px 0;
+    width: 100%;
+    color: #071E3D;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.cards img {
+    width: 100px;
+}
+
+.card {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30.3%;
+    height: 25vh;
+    border-radius: 20px;
+}
+
+.card p {
+    margin: 20px;
+}
 

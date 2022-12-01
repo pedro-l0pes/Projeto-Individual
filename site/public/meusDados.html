@@ -9,43 +9,44 @@
     <link rel="icon" type="image/png" href="./img/logo.png" />
     <link rel="stylesheet" href="./css/paginaUsuario.css">
     <link rel="stylesheet" href="./css/estiloGeral.css">
+    <script src="js/funcoes.js"></script>
     <title>Haspartum - Pagina Usuário</title>
 </head>
 
-<body>
+<body onload="adicionarDados(), plotarGrafico()">
     <div id="inicio" class="inicio">
         <header id="cabeca">
             <img src="./img/logo.png" alt="" class="logo">
             <h1>Haspartum</h1>
             <div class="usuario">
-                <img onclick="mostrarMenu()" src="./img/user.png" alt="" class="user"> Olá, <span>Usuário!</span>
+                <img onclick="mostrarMenu()" src="./img/user.png" alt="" class="user"> Olá, <span
+                    id="user">Usuário!</span>
             </div>
 
         </header>
         <div id="menu" class="menu">
         </div>
         <main id="corpo">
-            <!-- Criar aba para mostrar dados do usuario -->
             <div class="container1">
-               
+
                 <h1>Meus Dados</h1>
                 <div class="container">
-                <section>
-                    <div>Nome: <span>Pedro</span></div>
-                    <div>Sobrenome: <span>Oliveira</span></div>
-                    <div>Email: <span>pedro@example.com</span></div>
-                    <div>Esporte Favorito: <span>Futsal</span></div>
-                    <div>Quantidade de pessoas que gostam do mesmo espote que você: <span>39</span></div>
+                    <section>
+                        <div>Nome: <span id="dNome"></span></div>
+                        <div>Sobrenome: <span id="dSobrenome"></span></div>
+                        <div>Email: <span id="dEmail"></span></div>
+                        <div>Esporte Favorito: <span id="dEsporteFavorito"></span></div>
+                        <div>Quantidade de pessoas que gostam do mesmo espote que você: <span id="dQtd"></span></div>
 
-                </section>
-                <section>
-                    <div>Grafico Quiz:
-                        <div class="grafico">
-                            <canvas id="estatisticas"></canvas>
+                    </section>
+                    <section>
+                        <div>Grafico Quiz:
+                            <div class="grafico">
+                                <canvas id="estatisticas" style="width: 100vh;"></canvas>
+                            </div>
                         </div>
-                    </div>
-                </section>
-            </div>
+                    </section>
+                </div>
             </div>
         </main>
     </div>
@@ -64,20 +65,24 @@
         <div class="redesSociais">
             <h1>REDES SOCIAIS</h1>
             <div class="icones">
-                <img src="../img/facebook.png" alt="">
-                <img src="../img/instagram.png" alt="">
-                <img src="../img/linkedin.png" alt="">
-                <img src="../img/youtube.png" alt="">
+                <img src="./img/facebook.png" alt="">
+                <img src="./img/instagram.png" alt="">
+                <img src="./img/linkedin.png" alt="">
+                <img src="./img/youtube.png" alt="">
             </div>
         </div>
     </footer>
 </body>
 
 </html>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    verificarGrafico();
+
+    user.innerHTML = `${sessionStorage.NOME_USUARIO[0].toUpperCase()}.  ${sessionStorage.SOBRENOME_USUARIO[0].toUpperCase() + sessionStorage.SOBRENOME_USUARIO.substring(1)}`;
+    verificarQtd();
     function mostrarMenu() {
-        if (menu.style.height == "25vh") {
+        if (menu.style.height == "10vh") {
             menu.innerHTML = ``;
             menu.style.height = "0";
             botao1.style.width = "0";
@@ -86,26 +91,158 @@
             botao2.style.width = "0";
             botao2.style.padding = "0";
             botao2.innerHTML = "";
-            botao3.style.width = "0";
-            botao3.style.padding = "0";
-            botao3.innerHTML = "";
+
 
         } else {
             menu.innerHTML = `
-            <a id="botao1">Meus dados</a>  
-            <a id="botao2">Estatisticas</a>  
-            <a id="botao3">Sair</a>
+            <a href="./paginaUsuario.html" id="botao1">Quiz</a>  
+            <a onclick="sair()" id="botao2">Sair</a>
             `;
-            menu.style.height = "25vh";
+            menu.style.height = "10vh";
             botao1.style.width = "80%";
             botao1.style.padding = "10px";
             botao1.style.cursor = "pointer";
             botao2.style.width = "80%";
             botao2.style.padding = "10px";
             botao2.style.cursor = "pointer";
-            botao3.style.width = "80%";
-            botao3.style.padding = "10px";
-            botao3.style.cursor = "pointer";
+
         }
     }
+
+    function verificarQtd() {
+        const idUsuario = sessionStorage.ID_USUARIO;
+
+
+        fetch("/usuarios/verificarQtd", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idUsuarioServer: idUsuario,
+
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    sessionStorage.QTD = json.quantidade;
+
+                });
+
+            }
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+    function adicionarDados() {
+        verificarQtd();
+        dNome.innerHTML = sessionStorage.NOME_USUARIO;
+        dSobrenome.innerHTML = sessionStorage.SOBRENOME_USUARIO;
+        dEmail.innerHTML = sessionStorage.EMAIL_USUARIO;
+        dEsporteFavorito.innerHTML = sessionStorage.ESPORTEFAVORITO_USUARIO;
+        dQtd.innerHTML = sessionStorage.QTD;
+    }
+
+
+    function verificarGrafico() {
+        const idUsuario = sessionStorage.ID_USUARIO;
+
+
+        fetch("/usuarios/verificarGrafico", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idUsuarioServer: idUsuario,
+
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    
+                    const acertividade = json.acertividade;
+
+                    let labels = ['Acertividade'];
+
+                    let dados = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Pontos',
+                            data: [Number(acertividade)],
+                            fill: false,
+                            borderColor: '#fff',
+                            backgroundColor: '#21E6C1',
+                            tension: 0.1
+                        }]
+                    };
+
+                    const config = {
+                        type: 'bar',
+                        data: dados,
+                    };
+
+                    let myChart = new Chart(
+                        document.getElementById(`estatisticas`),
+                        config
+                    );
+                });
+
+            }
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+
+    function plotarGrafico() {
+        verificarGrafico()
+        const acertividade = sessionStorage.acertividade;
+
+        let labels = ['Acertividade'];
+
+        let dados = {
+            labels: labels,
+            datasets: [{
+                label: 'Pontos',
+                data: [Number(acertividade)],
+                fill: false,
+                borderColor: ' #21E6C1',
+                backgroundColor: '#fff',
+                tension: 0.1
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: dados,
+        };
+
+        let myChart = new Chart(
+            document.getElementById(`estatisticas`),
+            config
+        );
+
+
+    }
+
 </script>

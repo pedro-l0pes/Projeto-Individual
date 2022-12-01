@@ -9,16 +9,17 @@
     <link rel="icon" type="image/png" href="./img/logo.png" />
     <link rel="stylesheet" href="./css/paginaUsuario.css">
     <link rel="stylesheet" href="./css/estiloGeral.css">
+    <script src="js/funcoes.js"></script>
     <title>Haspartum - Pagina Usuário</title>
 </head>
 
 <body>
     <div id="inicio" class="inicio">
         <header id="cabeca">
-            <img src="../img/logo.png" alt="" class="logo">
+            <img src="./img/logo.png" alt="" class="logo">
             <h1>Haspartum</h1>
             <div class="usuario">
-                <img onclick="mostrarMenu()" src="../img/user.png" alt="" class="user"> Olá, <span>Usuário!</span>
+                <img onclick="mostrarMenu()" src="./img/user.png" alt="" class="user"> Olá, <span id="user">Usuário!</span>
             </div>
 
         </header>
@@ -26,63 +27,64 @@
         </div>
         <main id="corpo">
             <div class="perguntas">
-                <section class="questao1" id="questao1">
+                <h1>Quiz</h1>
+                <section class="questao" id="questao1">
                     <h3>Quem é o atual melhor jogador do mundo?</h3>
                     <label>
-                        <input type="radio" value="1" name="Q1" onclick="certa(0,this)"> 
+                        <input type="radio" value="1" name="Q1" onclick="certa(0,this)">
                         Neymar Jr
                     </label>
                     <label>
-                        <input type="radio" value="2" name="Q1" onclick="certa(0,this)"> 
+                        <input type="radio" value="2" name="Q1" onclick="certa(0,this)">
                         Messi
                     </label>
                     <label>
-                        <input type="radio" value="3" name="Q1" onclick="certa(0,this)"> 
+                        <input type="radio" value="3" name="Q1" onclick="certa(0,this)">
                         Bezema
                     </label>
                 </section>
-                <section class = "questao2" id="questao2">
+                <section class="questao" id="questao2">
                     <h3>Quem tem mais troféus de melhor jogador do mundo?</h3>
                     <label>
                         <input type="radio" value="1" name="Q2" onclick="certa(1,this)">
-                        Pelé 
+                        Pelé
                     </label>
                     <label>
                         <input type="radio" value="2" name="Q2" onclick="certa(1,this)">
-                        Maradona 
+                        Maradona
                     </label>
                     <label>
                         <input type="radio" value="3" name="Q2" onclick="certa(1,this)">
-                        Messi 
+                        Messi
                     </label>
                 </section>
-                <section class = "questao3" id="questao3">
+                <section class="questao" id="questao3">
                     <h3>Quem é considerado o rei do Futebol</h3>
                     <label>
-                        <input type="radio" value="1" name="Q3" onclick="certa(2,this)"> 
+                        <input type="radio" value="1" name="Q3" onclick="certa(2,this)">
                         Fenandão
                     </label>
                     <label>
                         <input type="radio" value="2" name="Q3" onclick="certa(2,this)">
-                        Pele 
+                        Pele
                     </label>
                     <label>
                         <input type="radio" value="3" name="Q3" onclick="certa(2,this)">
                         Maradona
                     </label>
                 </section>
-                <section class = "questao4" id="questao4">
+                <section class="questao" id="questao4">
                     <h3>Quem é considerado o rei do Futsal</h3>
                     <label>
-                        <input type="radio" value="1" name="Q4" onclick="certa(3,this)"> 
+                        <input type="radio" value="1" name="Q4" onclick="certa(3,this)">
                         Falcão
                     </label>
                     <label>
-                        <input type="radio" value="2" name="Q4" onclick="certa(3,this)"> 
+                        <input type="radio" value="2" name="Q4" onclick="certa(3,this)">
                         Leozinho
                     </label>
                     <label>
-                        <input type="radio" value="3" name="Q4" onclick="certa(3,this)"> 
+                        <input type="radio" value="3" name="Q4" onclick="certa(3,this)">
                         Ferrão
                     </label>
                 </section>
@@ -120,9 +122,9 @@
 </html>
 
 <script>
-
+    user.innerHTML = `${sessionStorage.NOME_USUARIO[0].toUpperCase()}.  ${sessionStorage.SOBRENOME_USUARIO[0].toUpperCase()+sessionStorage.SOBRENOME_USUARIO.substring(1)}`;
     function mostrarMenu() {
-        if (menu.style.height == "25vh") {
+        if (menu.style.height == "10vh") {
             menu.innerHTML = ``;
             menu.style.height = "0";
             botao1.style.width = "0";
@@ -131,48 +133,77 @@
             botao2.style.width = "0";
             botao2.style.padding = "0";
             botao2.innerHTML = "";
-            botao3.style.width = "0";
-            botao3.style.padding = "0";
-            botao3.innerHTML = "";
+
 
         } else {
             menu.innerHTML = `
-            <a id="botao1">Meus dados</a>  
-            <a id="botao2">Estatisticas</a>  
-            <a id="botao3">Sair</a>
+            <a href="./meusDados.html" id="botao1">Meus dados</a>  
+            <a onclick="sair()" id="botao2">Sair</a>
             `;
-            menu.style.height = "25vh";
+            menu.style.height = "10vh";
             botao1.style.width = "80%";
             botao1.style.padding = "10px";
             botao1.style.cursor = "pointer";
             botao2.style.width = "80%";
             botao2.style.padding = "10px";
-            botao2.style.cursor = "pointer";            
-            botao3.style.width = "80%";
-            botao3.style.padding = "10px";
-            botao3.style.cursor = "pointer";
+            botao2.style.cursor = "pointer";
+
         }
     }
 
     const respostas = [3, 3, 2, 1];
-	var respostaUsuario = [];
-	var acertos = 0;
-	
-	    function certa(num_pergunta, selecionada){
-	        respostaUsuario[num_pergunta] = selecionada.value
-	    }
-	
-	    function finalizar(){
-	        acertos = 0
-	        for(questao = 0; questao < respostas.length; questao++){
-	            if(respostas[questao] == respostaUsuario[questao]){
-	                acertos++
-	            }
-	        }
-            resultado.innerHTML = `Pontuação: ${acertos}`;
-	        // inserirPontos();
+    var respostaUsuario = [];
+    var acertos = 0;
+
+    function certa(num_pergunta, selecionada) {
+        respostaUsuario[num_pergunta] = selecionada.value
+    }
+
+    function finalizar() {
+        acertos = 0
+        for (questao = 0; questao < respostas.length; questao++) {
+            if (respostas[questao] == respostaUsuario[questao]) {
+                acertos++
+            }
         }
-    
+        resultado.innerHTML = `Pontuação: ${acertos}`;
+        inserirPontos(acertos);
+    }
+
+    function inserirPontos(acertos){
+            const idUsuario = sessionStorage.ID_USUARIO;
+
+            fetch("/usuarios/cadastrarPontos", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    acertosServer: acertos,
+                    idUsuarioServer: idUsuario
+                })
+            }).then(function (resposta) {
+
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+
+
+                    setTimeout(() => {
+                        window.location = "meusDados.html";
+                    }, "1000")
+
+                } else {
+
+                    throw ("Houve um erro ao tentar realizar o cadastro!");
+                }
+            }).catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+            return false;
+    }
+
 
 
 

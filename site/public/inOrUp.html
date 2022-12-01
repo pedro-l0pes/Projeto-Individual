@@ -213,8 +213,8 @@
     function entrar() {
 
 
-        var emailVar = ipt_email.value;
-        var senhaVar = ipt_senha.value;
+        const emailVar = ipt_email.value;
+        const senhaVar = ipt_senha.value;
 
         if (emailVar == "" || senhaVar == "") {
             div_erro.innerHTML = "O email ou senha está inválido";
@@ -247,11 +247,14 @@
 
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.ID_USUARIO = json.idUsuario;
+                    sessionStorage.SOBRENOME_USUARIO = json.sobrenome;
+                    sessionStorage.ESPORTEFAVORITO_USUARIO = json.esporteFavorito;
+                    verificarQtd()
 
                     setTimeout(function () {
                         window.location = "./paginaUsuario.html";
-                    }, 1000); // apenas para exibir o loading
+                    }, 1000);
 
                 });
 
@@ -271,15 +274,49 @@
 
         return false;
     }
+    function verificarQtd() {
+        const idUsuario = sessionStorage.ID_USUARIO;
+        
+
+        fetch("/usuarios/verificarQtd", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idUsuarioServer: idUsuario,
+
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    sessionStorage.QTD = json.quantidade;
+
+                });
+
+            } 
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
 
     function cadastrar() {
 
-        var nomeVar = ipt_nome.value;
-        var sobrenomeVar = ipt_sobrenome.value;
-        var esporteFavoritoVar = slct_esporte.value;
-        var emailVar = ipt_email.value;
-        var senhaVar = ipt_senha.value;
-        var confirmarSenhaVar = ipt_confirmarSenha.value;
+        const nomeVar = ipt_nome.value;
+        const sobrenomeVar = ipt_sobrenome.value;
+        const esporteFavoritoVar = slct_esporte.value;
+        const emailVar = ipt_email.value;
+        const senhaVar = ipt_senha.value;
+        const confirmarSenhaVar = ipt_confirmarSenha.value;
         div_erros.innerHTML = "";
 
         if (nomeVar == "" || sobrenomeVar == "") {

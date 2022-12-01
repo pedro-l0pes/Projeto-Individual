@@ -22,7 +22,7 @@ var mySqlConfig = {
     host: "localhost",
     database: "Haspartum",
     user: "root",
-    password: "root",
+    password: "",
 };
 
 function executar(instrucao) {

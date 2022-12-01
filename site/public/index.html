@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- icone para pagina-->
-    <link rel="icon" type="image/png" href="./img/logo.png"/>
+    <link rel="icon" type="image/png" href="./img/logo.png" />
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/estiloGeral.css">
     <title>Haspartum</title>
 </head>
+
 <body>
     <div class="inicio">
         <header>
@@ -18,13 +20,39 @@
             <img onclick="mostrarMenu()" src="./img/user.png" alt="" class="user">
         </header>
         <div id="menu" class="menu">
-            <a id="botao1" href='inOrUp.html' ></a>  
+            <a id="botao1" href='inOrUp.html'></a>
         </div>
         <main>
             <div class="container">
                 <h1 class="principal">Seja, Bem-Vindo!</h1>
-                <p>Esse site foi criado para que os amantes do futebol possam testar seu conhecimento através de quiz (teste rápido) e possa ter a oportunidade de uma ou mais interação(ões) com outros amantes desse esporte maginifico</p>
+                <p>Esse site foi criado para que os amantes do futebol possam testar seu conhecimento através de quiz
+                    (teste rápido)</p>
                 <p><a class="entrar" href="inOrUp.html">Entre</a> e aproveite!</p>
+            </div>
+
+            <div class="valores">
+                <div class="cards">
+                    <div class="card">
+                        <h2>Respeito:</h2>
+                        <p>designa um sentimento positivo, consideração pelas qualidades reais do respeitado, seja uma
+                            pessoa ou para entidade, e também ações específicas e condutas representativas daquela
+                            estima.</p>
+                        <img src="./img/aperto-de-mao.png" alt="">
+                    </div>
+                    <div  class="card">
+                        <h2>Humildade:</h2>
+                        <p>é a virtude que consiste em conhecer as suas próprias limitações e fraquezas e agir de acordo
+                            com essa consciência.</p>
+                        <img src="./img/cara-de-humildade.png" alt="">
+                    </div>
+                    <div  class="card">
+                        <h2>Trabalho em equipe:</h2>
+                        <p> é quando um grupo ou uma sociedade resolve criar um esforço coletivo para resolver um
+                            problema.</p>
+                        <img src="./img/trabalho-em-equipe.png" alt="">
+                    </div>
+                    
+                </div>
             </div>
         </main>
     </div>
@@ -51,10 +79,11 @@
         </div>
     </footer>
 </body>
+
 </html>
 
 <script>
-    function mostrarMenu(){
+    function mostrarMenu() {
         if (menu.style.height == "10vh") {
             menu.style.height = "0";
             botao1.style.width = "0";

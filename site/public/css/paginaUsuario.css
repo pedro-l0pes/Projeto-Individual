@@ -82,5 +82,68 @@ main .container span {
     color:aquamarine;
 }
 
+h1{
+    font-size: 50px;
+    text-shadow: 2px 2px 3px aquamarine;
 
- 
+}
+
+.perguntas {
+    width: 70%;
+    height: 55%;
+    color: #fff;
+    background-color: rgba(7, 30, 61, 0.534);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    border-radius: 10px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.perguntas::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+  }
+  .perguntas::-webkit-scrollbar-track {
+    background: #21E6C1;
+    border-bottom-right-radius:20px;
+    border-top-right-radius:20px;
+            /* color of the tracking area */
+  }
+  .perguntas::-webkit-scrollbar-thumb {
+    background-color:  #071E3D;    /* color of the scroll thumb */
+    border-radius: 20px;
+    border: 2px solid  #21E6C1;      /* roundness of the scroll thumb */  /* creates padding around scroll thumb */
+}
+
+.questao {
+    margin: 20px;
+    background-color: rgba(7, 30, 61, 0.684);
+    width: 45%;
+    height: 80%;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-evenly;
+    border:#21E6C1 solid 1px;
+    align-items: start;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #21E6C1;
+    color:  #071E3D;
+    font-size: 14px;
+    margin: 20px;
+}
+
+
+button:hover{
+    transition: 0.3s;
+    background-color: #071E3D;
+    color: #21E6C1;
+}
